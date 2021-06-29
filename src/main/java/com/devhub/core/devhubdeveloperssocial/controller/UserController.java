@@ -2,6 +2,7 @@ package com.devhub.core.devhubdeveloperssocial.controller;
 
 import com.devhub.core.devhubdeveloperssocial.domain.User;
 import com.devhub.core.devhubdeveloperssocial.repository.UserRepository;
+import com.devhub.core.devhubdeveloperssocial.service.UserService;
 import com.devhub.core.devhubdeveloperssocial.shared.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping
     public GenericResponse saveUser(@RequestBody User user) {
-        userRepository.save(user);
+        userService.save(user);
         GenericResponse body = new GenericResponse();
-        body.setMessage("User saved");
-        return body;
+        return new GenericResponse("User saved");
     }
 }
