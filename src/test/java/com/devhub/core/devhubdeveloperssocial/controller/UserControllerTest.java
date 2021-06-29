@@ -2,11 +2,10 @@ package com.devhub.core.devhubdeveloperssocial.controller;
 
 import com.devhub.core.devhubdeveloperssocial.domain.User;
 import com.devhub.core.devhubdeveloperssocial.repository.UserRepository;
+import com.devhub.core.devhubdeveloperssocial.shared.GenericResponse;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -58,4 +57,12 @@ public class UserControllerTest {
         testRestTemplate.postForEntity(API_1_0_USERS, user, Object.class);
         assertThat(userRepository.count()).isEqualTo(1);
     }
+
+    @Test
+    public void postUser_whenUserIsValid_receiveSuccessMessage() {
+        User user = createValidUser();
+        ResponseEntity<GenericResponse> responseEntity = testRestTemplate.postForEntity(API_1_0_USERS, user, GenericResponse.class);
+        assertThat(responseEntity.getBody().getMessage()).isNotNull();
+    }
+
 }
