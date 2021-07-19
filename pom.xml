@@ -132,8 +132,6 @@
                 <configuration>
                     <installDirectory>root</installDirectory>
                     <workingDirectory>src/main/frontend</workingDirectory>
-                    <nodeVersion>${node.version}</nodeVersion>
-                    <downloadRoot>${node.url}</downloadRoot>
                 </configuration>
                 <executions>
                     <execution>
