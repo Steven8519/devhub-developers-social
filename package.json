@@ -1,0 +1,11 @@
+{
+  "name": "devhub-developers-social",
+  "version": "1.0.0",
+  "devDependencies": {
+    "fancy-log": "^1.3.3"
+  },
+  "dependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2"
+  }
+}

@@ -1,0 +1,28 @@
+node ("slave") {
+  def image
+  def mvnHome = tool 'Maven3'
+     stage ('checkout') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Steven8519/devhub-developers-social.git']]])
+     }
+
+    stage ('Build') {
+            sh 'mvn -f devhub-developer-social/pom.xml clean install'
+    }
+
+    stage ('Docker Build') {
+         // Build and push image with Jenkins' docker-plugin
+            withDockerRegistry([credentialsId: "dockerhub", url: "https://index.docker.io/v1/"]) {
+            image = docker.build("steven8519/userapp", "MyAwesomeApp")
+            image.push()
+            }
+        }
+
+      stage ('K8S Deploy') {
+        kubernetesDeploy(
+            configs: 'devhub-developer-social/manifest.yml',
+            kubeconfigId: 'K8S',
+            enableConfigSubstitution: true
+        )
+    }
+
+}
