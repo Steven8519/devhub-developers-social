@@ -6,7 +6,7 @@ node {
      }
 
     stage ('Build') {
-            sh 'mvn -f devhub-developer-social/pom.xml clean install'
+            sh 'mvn -f pom.xml clean install'
     }
 
     stage ('Docker Build') {
