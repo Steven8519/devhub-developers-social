@@ -1,8 +1,8 @@
-node ("slave") {
+node {
   def image
   def mvnHome = tool 'Maven3'
      stage ('checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Steven8519/devhub-developers-social.git']]])
+        git credentialsId: 'GIT_CREDENTIALS', url:  'https://github.com/Steven8519/devhub-developers-social.git', branch: 'master'
      }
 
     stage ('Build') {
