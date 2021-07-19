@@ -6,7 +6,6 @@ node {
      }
 
     stage ('Build') {
-            sh 'npm install gulp'
             sh 'mvn -B -DskipTests clean package'
     }
 
