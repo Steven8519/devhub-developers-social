@@ -6,7 +6,7 @@ node {
      }
 
     stage ('Build') {
-            sh 'clean package'
+            sh 'mvn -f pom.xml clean install'
     }
 
     stage ('Docker Build') {
