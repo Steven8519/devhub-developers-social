@@ -6,7 +6,7 @@ node {
      }
 
     stage ('Build') {
-            sh 'mvn -DskipTests clean package'
+            sh 'mvn clean package'
     }
 
     stage ('Docker Build') {
