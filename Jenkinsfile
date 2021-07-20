@@ -5,13 +5,15 @@ node {
         git credentialsId: 'GIT_CREDENTIALS', url:  'https://github.com/Steven8519/devhub-developers-social.git', branch: 'master'
      }
 
-    stage ('Docker Build') {
-         // Build and push image with Jenkins' docker-plugin
-            withDockerRegistry([credentialsId: "dockerhub", url: "https://index.docker.io/v1/"]) {
-            image = docker.build("steven8519/userapp", "devhub-developers-social")
-            image.push()
-            }
+    stage('Build Docker Image'){
+            sh 'docker build -t steven8519/userapp .'
         }
+    stage('Push Docker Image'){
+        withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+             sh "docker login -u steven8519 -p ${dockerhub}"
+        }
+             sh 'docker push steven8519/userapp '
+    }
 
       stage ('K8S Deploy') {
         kubernetesDeploy(
