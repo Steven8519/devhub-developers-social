@@ -34,7 +34,11 @@ pipeline {
 
     stage('Deploy to kubernetes') {
           steps{
-            sh 'kubectl apply -f manifest.yml --validate=false'
+             kubernetesDeploy(
+                configs: 'MyAwesomeApp/springboot-lb.yaml',
+                kubeconfigId: 'k8s',
+                enableConfigSubstitution: true
+             )
           }
      }
 
