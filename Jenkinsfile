@@ -9,8 +9,8 @@ node {
             sh 'docker build -t steven8519/userapp .'
         }
     stage('Push Docker Image'){
-        withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-             sh "docker login -u steven8519 -p ${dockerhub}"
+        withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'DOCKER_HUB')]) {
+             sh "docker login -u steven8519 -p ${DOCKER_HUB}"
         }
              sh 'docker push steven8519/userapp '
     }
