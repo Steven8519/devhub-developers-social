@@ -6,7 +6,7 @@ node {
      }
 
     stage ('Build') {
-            sh 'mvn -f pom.xml clean install'
+            maven_invoker invokerBuildDir: 'target/it', reportsFilenamePattern: 'target/invoker-reports/BUILD*.xml'
     }
 
     stage ('Docker Build') {
