@@ -5,8 +5,8 @@ node {
         git credentialsId: 'GIT_CREDENTIALS', url:  'https://github.com/Steven8519/devhub-developers-social.git', branch: 'master'
      }
 
-    stage ('Build') {
-            sh 'mvn -X -DskipTests clean package'
+    stage ('Maven Test') {
+            sh 'mvn test'
     }
 
     stage ('Docker Build') {
@@ -19,7 +19,7 @@ node {
 
       stage ('K8S Deploy') {
         kubernetesDeploy(
-            configs: 'devhub-developer-social/manifest.yml',
+            configs: 'manifest.yml',
             kubeconfigId: 'K8S',
             enableConfigSubstitution: true
         )
