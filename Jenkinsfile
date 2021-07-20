@@ -31,6 +31,13 @@ pipeline {
         }
       }
     }
+
+    stage('Deploy to kubernetes') {
+          steps{
+            sh 'kubectl apply -f manifest.yaml --validate=false'
+          }
+     }
+
     stage('Remove Unused docker image') {
       steps{
         sh "docker rmi $imagename:$BUILD_NUMBER"

@@ -18,7 +18,7 @@ spec:
         app: react-webapp
     spec:
       containers:
-        - image: 080721745219.dkr.ecr.us-east-2.amazonaws.com/frontend/react-java:v3
+        - image: steven8519/userapp:latest
           name: webapp
           imagePullPolicy: Always
           resources: {}
