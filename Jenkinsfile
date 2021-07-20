@@ -5,14 +5,10 @@ node {
         git credentialsId: 'GIT_CREDENTIALS', url:  'https://github.com/Steven8519/devhub-developers-social.git', branch: 'master'
      }
 
-    stage ('Maven Test') {
-            sh 'mvn test'
-    }
-
     stage ('Docker Build') {
          // Build and push image with Jenkins' docker-plugin
             withDockerRegistry([credentialsId: "dockerhub", url: "https://index.docker.io/v1/"]) {
-            image = docker.build("steven8519/userapp", "MyAwesomeApp")
+            image = docker.build("steven8519/userapp", "devhub-developers-social")
             image.push()
             }
         }
