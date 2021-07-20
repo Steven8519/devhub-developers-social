@@ -34,7 +34,7 @@ pipeline {
 
     stage('Deploy to kubernetes') {
           steps{
-            sh 'kubectl apply -f manifest.yaml --validate=false'
+            sh 'kubectl apply -f manifest.yml --validate=false'
           }
      }
 
