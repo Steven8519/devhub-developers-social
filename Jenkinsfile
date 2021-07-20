@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Chechout') {
       steps {
-        git([url: 'https://github.com/ismailyenigul/hacicenkins.git', branch: 'master', credentialsId: 'github'])
+        git([url: 'https://github.com/Steven8519/devhub-developers-social.git', branch: 'master', credentialsId: 'github'])
 
       }
     }
