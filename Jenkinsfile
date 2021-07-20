@@ -1,26 +1,42 @@
-node {
-  def image
-  def mvnHome = tool 'Maven3'
-     stage ('checkout') {
-        git credentialsId: 'GIT_CREDENTIALS', url:  'https://github.com/Steven8519/devhub-developers-social.git', branch: 'master'
-     }
+pipeline {
+  environment {
+    imagename = "steven8519/userapp"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
 
-    stage('Build Docker Image'){
-            sh 'docker build -t steven8519/userapp .'
-        }
-    stage('Push Docker Image'){
-        withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'DOCKER_HUB')]) {
-             sh "docker login -u steven8519 -p ${DOCKER_HUB}"
-        }
-             sh 'docker push steven8519/userapp '
+  agent any
+  stages {
+    stage('Chechout') {
+      steps {
+        git([url: 'https://github.com/ismailyenigul/hacicenkins.git', branch: 'master', credentialsId: 'github'])
+
+      }
     }
-
-      stage ('K8S Deploy') {
-        kubernetesDeploy(
-            configs: 'manifest.yml',
-            kubeconfigId: 'K8S',
-            enableConfigSubstitution: true
-        )
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build imagename
+        }
+      }
     }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push("$BUILD_NUMBER")
+             dockerImage.push('latest')
 
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $imagename:$BUILD_NUMBER"
+         sh "docker rmi $imagename:latest"
+
+      }
+    }
+  }
 }
