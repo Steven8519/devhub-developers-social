@@ -34,11 +34,7 @@ pipeline {
 
     stage('Deploy to kubernetes') {
           steps{
-             kubernetesDeploy(
-                configs: 'manifest.yml',
-                kubeconfigId: 'k8s',
-                enableConfigSubstitution: true
-             )
+            sh 'kubectl apply -f manifest.yml --validate=false'
           }
      }
 
